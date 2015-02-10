@@ -5,30 +5,27 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 /**
- * Object that allows for reading and writing to
- * the underlying SQLite database
- * @author Robert Guthrie
- * @version 1.0
+ * Created by robertguthrie on 2/9/15.
  */
-public class LoginDBHelper extends SQLiteOpenHelper {
+public class FriendsDBHelper extends SQLiteOpenHelper {
 
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "ShoppingWithFriends.db";
     public static final String SQL_CREATE_ENTRIES = "CREATE TABLE "
-            + LoginContract.LoginEntry.TABLE_NAME + " (_id INTEGER PRIMARY KEY AUTOINCREMENT,"
-            + LoginContract.LoginEntry.COLUMN_EMAIL + " TEXT,"
-            + LoginContract.LoginEntry.COLUMN_PASSWORD + " TEXT)";
+            + FriendsContract.FriendsEntry.TABLE_NAME + " (_id INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + FriendsContract.FriendsEntry.COLUMN_USER1 + " INTEGER FOREIGN KEY REFERENCES LOGIN(_id),"
+            + FriendsContract.FriendsEntry.COLUMN_USER2 + " INTEGER FOREIGN KEY REFERENCES LOGIN(_id)";
 
-    public LoginDBHelper(Context context) {
+    public FriendsDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
-
+    @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_ENTRIES);
     }
 
+    @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        //db.execSQL(SQL_DELETE_ENTRIES);
         onCreate(db);
     }
 }
