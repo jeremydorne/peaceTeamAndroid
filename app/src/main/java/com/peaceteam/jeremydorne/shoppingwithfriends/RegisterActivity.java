@@ -87,14 +87,14 @@ public class RegisterActivity extends Activity {
         if (!pass.equals(confirmPass)) {
             Toast.makeText(getApplicationContext(), "Passwords Don't Match", Toast.LENGTH_LONG).show();
         } else {
-            SQLiteDatabase database = db.getWritableDatabase();
-            ContentValues values = new ContentValues();
-            values.put(LoginContract.LoginEntry.COLUMN_EMAIL, email);
-            values.put(LoginContract.LoginEntry.COLUMN_PASSWORD, pass);
-            database.insert(LoginContract.LoginEntry.TABLE_NAME,
-                    null,
-                    values);
-            Toast.makeText(getApplicationContext(), "Account Created!", Toast.LENGTH_LONG).show();
+//            SQLiteDatabase database = db.getWritableDatabase();
+//            ContentValues values = new ContentValues();
+//            values.put(LoginContract.LoginEntry.COLUMN_EMAIL, email);
+//            values.put(LoginContract.LoginEntry.COLUMN_PASSWORD, pass);
+//            database.insert(LoginContract.LoginEntry.TABLE_NAME,
+//                    null,
+//                    values);
+//            Toast.makeText(getApplicationContext(), "Account Created!", Toast.LENGTH_LONG).show();
         }
     }
 

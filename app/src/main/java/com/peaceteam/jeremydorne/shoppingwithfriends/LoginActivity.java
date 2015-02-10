@@ -17,6 +17,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,6 +28,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -298,24 +307,52 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
          */
         @Override
         protected Boolean doInBackground(Void... params) {
-            SQLiteDatabase database = db.getReadableDatabase();
-            String[] projection = {
-                    LoginContract.LoginEntry.COLUMN_EMAIL,
-                    LoginContract.LoginEntry.COLUMN_PASSWORD
-            };
-            String selection = LoginContract.LoginEntry.COLUMN_EMAIL + "=?";
-            String[] selectionArgs = {mEmail};
-            Cursor c = database.query(
-                    LoginContract.LoginEntry.TABLE_NAME,
-                    projection,
-                    selection,
-                    selectionArgs,
-                    null,
-                    null,
-                    null);
-            if (c.moveToFirst()) {
-                String password = c.getString(1);
-                return password.equals(mPassword);
+//            SQLiteDatabase database = db.getReadableDatabase();
+//            String[] projection = {
+//                    LoginContract.LoginEntry.COLUMN_EMAIL,
+//                    LoginContract.LoginEntry.COLUMN_PASSWORD
+//            };
+//            String selection = LoginContract.LoginEntry.COLUMN_EMAIL + "=?";
+//            String[] selectionArgs = {mEmail};
+//            Cursor c = database.query(
+//                    LoginContract.LoginEntry.TABLE_NAME,
+//                    projection,
+//                    selection,
+//                    selectionArgs,
+//                    null,
+//                    null,
+//                    null);
+//            if (c.moveToFirst()) {
+//                String password = c.getString(1);
+//                return password.equals(mPassword);
+//            }
+            String credentials = "{\"email\": \"" + mEmail + "\", \"password\": \"" + mPassword + "\" }";
+            try {
+                URL url = new URL("http://10.0.2.2:3000/authenticate");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setReadTimeout(10000);
+                conn.setConnectTimeout(15000);
+                conn.setRequestMethod("POST");
+                conn.setDoOutput(true);
+                conn.setChunkedStreamingMode(0);
+                conn.setRequestProperty("Content-Type", "application/json");
+                DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+                wr.writeBytes(credentials);
+                wr.flush();
+                wr.close();
+
+                BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                String inputLine;
+                StringBuffer response = new StringBuffer();
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+                JSONObject responseObject = new JSONObject(response.toString());
+                boolean isAuthenticated = responseObject.getBoolean("isAuthenticated");
+                return isAuthenticated;
+            } catch (Exception e) {
+                Log.d("info", e.getMessage().toString());
             }
             return false;
         }
