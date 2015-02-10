@@ -1,0 +1,61 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.peaceteam.jeremydorne.shoppingwithfriends.RegisterActivity"
+    android:background="@drawable/goldengate">
+
+    <EditText android:id="@+id/email" android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        android:textColorHint="@color/abc_primary_text_material_dark"
+        android:textColor="#FFFFFF"
+        android:maxLines="1" android:singleLine="true"
+        android:layout_above="@+id/password"
+        android:layout_alignStart="@+id/createAccount" />
+
+    <EditText android:id="@+id/password" android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        android:textColorHint="@color/abc_primary_text_material_dark"
+        android:inputType="textPassword"
+        android:textColor="#FFFFFF"
+        android:maxLines="1" android:singleLine="true"
+
+        android:layout_above="@+id/confirmPassword"
+        android:layout_alignStart="@+id/confirmPassword" />
+
+    <EditText android:id="@+id/confirmPassword" android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Confirm Password"
+        android:textColorHint="@color/abc_primary_text_material_dark"
+        android:inputType="textPassword"
+        android:textColor="#FFFFFF"
+        android:maxLines="1" android:singleLine="true"
+        android:layout_centerVertical="true"
+        android:layout_alignStart="@+id/email" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Create Account"
+        android:id="@+id/createAccount"
+        android:background="#45B29D"
+        android:textColor="#000000"
+        android:textSize="30sp"
+        android:onClick="registerUser"
+        android:layout_above="@+id/cancelRegister"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:id="@+id/cancelRegister"
+        android:background="#E27A3F"
+        android:textColor="#000000"
+        android:textSize="30sp"
+        android:onClick="cancelRegister"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
+</RelativeLayout>
