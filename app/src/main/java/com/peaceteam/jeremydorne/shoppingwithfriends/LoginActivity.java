@@ -9,6 +9,7 @@ import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.AsyncTask;
 
@@ -45,6 +46,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private LoginDBHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +56,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        mPasswordView = (EditText) findViewById(R.id.password);
         populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.password);
@@ -78,6 +81,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+        db = new LoginDBHelper(this);
     }
 
     private void populateAutoComplete() {
@@ -150,12 +154,12 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
-        return email.contains("@");
+        return true;
     }
 
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
-        return password.length() > 4;
+        return true;
     }
 
     /**
@@ -269,20 +273,26 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-
-            try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
+            SQLiteDatabase database = db.getReadableDatabase();
+            String[] projection = {
+                    LoginContract.LoginEntry.COLUMN_EMAIL,
+                    LoginContract.LoginEntry.COLUMN_PASSWORD
+            };
+            String selection = LoginContract.LoginEntry.COLUMN_EMAIL + "=?";
+            String[] selectionArgs = {mEmail};
+            Cursor c = database.query(
+                    LoginContract.LoginEntry.TABLE_NAME,
+                    projection,
+                    selection,
+                    selectionArgs,
+                    null,
+                    null,
+                    null);
+            if (c.moveToFirst()) {
+                String password = c.getString(1);
+                return password.equals(mPassword);
             }
-
-            if (mEmail.equals("user") && mPassword.equals("pass")) {
-                return true;
-            } else {
-                return false;
-            }
+            return false;
         }
 
         @Override

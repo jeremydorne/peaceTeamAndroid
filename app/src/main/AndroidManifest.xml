@@ -38,6 +38,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.peaceteam.jeremydorne.shoppingwithfriends.StartActivity" />
         </activity>
+        <activity
+            android:name=".HomeActivity"
+            android:label="HomeActivity" >
+        </activity>
     </application>
 
 </manifest>
