@@ -13,15 +13,24 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-
+/**
+ * Class for the register screen of the application
+ * @author Robert Guthrie
+ * @version 1.0
+ */
 public class RegisterActivity extends Activity {
 
+    /* Variables to store references to UI controls */
     EditText mEmail;
     EditText mPassword;
     EditText mConfirmPassword;
     Button mCreateAccount;
     LoginDBHelper db;
 
+    /**
+     * Initialize references to views and the database
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -12,6 +12,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class LoginDBHelper extends SQLiteOpenHelper {
 
+    /* variables that holder information about the db */
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "ShoppingWithFriends.db";
     public static final String SQL_CREATE_ENTRIES = "CREATE TABLE "
@@ -19,14 +20,29 @@ public class LoginDBHelper extends SQLiteOpenHelper {
             + LoginContract.LoginEntry.COLUMN_EMAIL + " TEXT,"
             + LoginContract.LoginEntry.COLUMN_PASSWORD + " TEXT)";
 
+    /**
+     * Create an instance of the DB helper in the given context
+     * @param context
+     */
     public LoginDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    /**
+     * If the table does not already exist, create it
+     * @param db
+     */
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_ENTRIES);
     }
 
+    /**
+     * NOT IMPLEMENTED
+     * Recreates the table if the DB is updated
+     * @param db the db to be updated
+     * @param oldVersion the old version number
+     * @param newVersion the new version number
+     */
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         //db.execSQL(SQL_DELETE_ENTRIES);
         onCreate(db);

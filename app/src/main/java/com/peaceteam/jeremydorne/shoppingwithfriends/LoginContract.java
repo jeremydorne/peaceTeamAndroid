@@ -12,6 +12,10 @@ public final class LoginContract {
 
     public LoginContract() {}
 
+    /**
+     * Class that represents the columns and table name of the Login table
+     * as static variables
+     */
     public static abstract class LoginEntry implements BaseColumns {
         public static final String TABLE_NAME = "LOGIN";
         public static final String COLUMN_EMAIL = "email";

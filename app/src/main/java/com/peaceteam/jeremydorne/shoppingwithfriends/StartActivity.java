@@ -8,7 +8,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-
+/**
+ * Class for the first activity the user sees
+ * @author Robert Guthrie
+ * @version 1.0
+ */
 public class StartActivity extends Activity {
 
     @Override

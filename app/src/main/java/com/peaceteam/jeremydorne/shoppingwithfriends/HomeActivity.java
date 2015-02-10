@@ -7,7 +7,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-
+/**
+ * Activity class for the Home page of the application
+ * @author Robert Guthrie
+ * @version 1.0
+ */
 public class HomeActivity extends Activity {
 
     @Override

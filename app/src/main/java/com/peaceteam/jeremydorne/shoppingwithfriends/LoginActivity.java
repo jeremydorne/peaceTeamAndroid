@@ -33,6 +33,8 @@ import java.util.List;
 
 /**
  * A login screen that offers login via email/password.
+ * @author Robert Guthrie
+ * @version 1.0
  */
 public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
@@ -48,6 +50,10 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
     private View mLoginFormView;
     private LoginDBHelper db;
 
+    /**
+     * Initialize the required UI references and DB reference
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -152,11 +158,21 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         }
     }
 
+    /**
+     * Return if the email is valid or not
+     * @param email
+     * @return whether the email is valid
+     */
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
         return true;
     }
 
+    /**
+     * Whether the password is valid or not
+     * @param password
+     * @return whether the password is valid
+     */
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
         return true;
@@ -252,6 +268,10 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         mEmailView.setAdapter(adapter);
     }
 
+    /**
+     * Logs in the user and sends them to the home screen if the authentication
+     * was successful
+     */
     private void loginUser() {
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
@@ -271,6 +291,11 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             mPassword = password;
         }
 
+        /**
+         * Authenticates the user against the SQLite database
+         * @param params
+         * @return whether or not the user was authenticated
+         */
         @Override
         protected Boolean doInBackground(Void... params) {
             SQLiteDatabase database = db.getReadableDatabase();
