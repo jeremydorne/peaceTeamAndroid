@@ -57,7 +57,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
-    private LoginDBHelper db;
 
     /**
      * Initialize the required UI references and DB reference
@@ -96,7 +95,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
-        db = new LoginDBHelper(this);
     }
 
     private void populateAutoComplete() {
@@ -282,7 +280,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
      * was successful
      */
     private void loginUser() {
-        Intent intent = new Intent(this, HomeActivity.class);
+        Intent intent = new Intent(this, FriendsActivity.class);
         startActivity(intent);
     }
 
@@ -307,25 +305,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
          */
         @Override
         protected Boolean doInBackground(Void... params) {
-//            SQLiteDatabase database = db.getReadableDatabase();
-//            String[] projection = {
-//                    LoginContract.LoginEntry.COLUMN_EMAIL,
-//                    LoginContract.LoginEntry.COLUMN_PASSWORD
-//            };
-//            String selection = LoginContract.LoginEntry.COLUMN_EMAIL + "=?";
-//            String[] selectionArgs = {mEmail};
-//            Cursor c = database.query(
-//                    LoginContract.LoginEntry.TABLE_NAME,
-//                    projection,
-//                    selection,
-//                    selectionArgs,
-//                    null,
-//                    null,
-//                    null);
-//            if (c.moveToFirst()) {
-//                String password = c.getString(1);
-//                return password.equals(mPassword);
-//            }
             String credentials = "{\"email\": \"" + mEmail + "\", \"password\": \"" + mPassword + "\" }";
             try {
                 URL url = new URL("http://10.0.2.2:3000/authenticate");

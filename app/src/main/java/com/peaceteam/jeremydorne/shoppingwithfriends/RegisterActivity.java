@@ -35,7 +35,6 @@ public class RegisterActivity extends Activity {
     EditText mPassword;
     EditText mConfirmPassword;
     Button mCreateAccount;
-    LoginDBHelper db;
 
     /**
      * Initialize references to views and the database
@@ -45,9 +44,6 @@ public class RegisterActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
-        //make a database adaptor
-        db = new LoginDBHelper(getApplicationContext());
 
         //UI variables
         mEmail = (EditText) findViewById(R.id.email);
