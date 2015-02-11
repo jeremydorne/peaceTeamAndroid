@@ -352,7 +352,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                 boolean isAuthenticated = responseObject.getBoolean("isAuthenticated");
                 return isAuthenticated;
             } catch (Exception e) {
-                Log.d("info", e.getMessage().toString());
             }
             return false;
         }
