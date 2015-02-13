@@ -11,8 +11,17 @@
         android:textColorHint="@color/abc_primary_text_material_dark"
         android:textColor="#FFFFFF"
         android:maxLines="1" android:singleLine="true"
-        android:layout_above="@+id/password"
+        android:layout_above="@+id/name"
         android:layout_alignStart="@+id/createAccount" />
+
+
+    <EditText android:id="@+id/name" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:hint="Name"
+        android:textColorHint="@color/abc_primary_text_material_dark"
+        android:textColor="#FFFFFF"
+        android:maxLines="1" android:singleLine="true"
+        android:layout_above="@+id/password"
+        android:layout_alignStart="@+id/login_form" />
 
     <EditText android:id="@+id/password" android:layout_width="match_parent"
         android:layout_height="wrap_content"

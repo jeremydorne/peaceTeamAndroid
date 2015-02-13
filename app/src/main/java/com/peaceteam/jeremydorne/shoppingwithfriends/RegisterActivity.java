@@ -34,6 +34,7 @@ public class RegisterActivity extends Activity {
     EditText mEmail;
     EditText mPassword;
     EditText mConfirmPassword;
+    EditText mName;
     Button mCreateAccount;
 
     /**
@@ -49,6 +50,7 @@ public class RegisterActivity extends Activity {
         mEmail = (EditText) findViewById(R.id.email);
         mPassword = (EditText) findViewById(R.id.password);
         mConfirmPassword = (EditText) findViewById(R.id.confirmPassword);
+        mName = (EditText) findViewById(R.id.name);
         mCreateAccount = (Button) findViewById(R.id.createAccount);
     }
 
@@ -90,11 +92,12 @@ public class RegisterActivity extends Activity {
         String email = mEmail.getText().toString();
         String pass = mPassword.getText().toString();
         String confirmPass = mConfirmPassword.getText().toString();
+        String name = mName.getText().toString();
         if (!pass.equals(confirmPass)) {
             Toast.makeText(getApplicationContext(), "Passwords Don't Match", Toast.LENGTH_LONG).show();
         } else {
             Log.d("info", "About to register user");
-            RegisterUserTask rTask = new RegisterUserTask(email, pass);
+            RegisterUserTask rTask = new RegisterUserTask(email, pass, name);
             rTask.execute((Void) null);
         }
     }
@@ -117,15 +120,18 @@ public class RegisterActivity extends Activity {
     public class RegisterUserTask extends AsyncTask<Void, Void, Boolean> {
         private final String mEmail;
         private final String mPass;
+        private final String mName;
 
-        RegisterUserTask(String email, String password) {
+        RegisterUserTask(String email, String password, String name) {
             mEmail = email;
             mPass = password;
+            mName = name;
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            String credentials = "{ \"email\": \"" + mEmail + "\", \"password\": \"" + mPass + "\"}";
+            String credentials = "{ \"email\": \"" + mEmail + "\", \"password\": \"" + mPass + "\"," +
+                  "\"name\": \"" + mName + "\" }";
             try {
                 URL url = new URL("http://10.0.2.2:3000/register");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
