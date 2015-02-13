@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -19,19 +21,21 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 
 public class FriendsActivity extends Activity {
 
-    public TableLayout mTableLayout;
+    public ListView mListView;
+    private String userEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends);
-
-        mTableLayout = (TableLayout) findViewById(R.id.main_table_layout);
-        GetFriendsTask getFriends = new GetFriendsTask("rguthrie3@gatech.edu");
+        userEmail = getIntent().getStringExtra("email");
+        mListView = (ListView) findViewById(R.id.list_view);
+        GetFriendsTask getFriends = new GetFriendsTask(userEmail);
         getFriends.execute((Void) null);
     }
 
@@ -59,23 +63,41 @@ public class FriendsActivity extends Activity {
     }
 
     public void populateTable(JSONObject data) {
+//        try {
+//            JSONArray friends = data.getJSONArray("friends");
+//            for (int i = 0; i < friends.length(); i++) {
+//                JSONObject friend = new JSONObject(friends.get(i).toString());
+//                TableRow row = new TableRow(this);
+//                row.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,
+//                        TableLayout.LayoutParams.WRAP_CONTENT));
+//                TextView tv = new TextView(this);
+//                tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+//                        TableRow.LayoutParams.WRAP_CONTENT));
+//                tv.setText(friend.getString("name") + " " + friend.getString("email")
+//                        + " " + friend.getDouble("rating") + " " + friend.getInt("numSalesReported"));
+//                row.addView(tv);
+//                mListView.addView(row);
+//            }
+//        } catch (JSONException e) {
+//            Log.d("info", e.getMessage());
+//        }
+        ArrayList<User> friendsArrayList = new ArrayList<>();
         try {
             JSONArray friends = data.getJSONArray("friends");
             for (int i = 0; i < friends.length(); i++) {
-                JSONObject friend = new JSONObject(friends.get(i).toString());
-                TableRow row = new TableRow(this);
-                row.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,
-                        TableLayout.LayoutParams.WRAP_CONTENT));
-                TextView tv = new TextView(this);
-                tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                        TableRow.LayoutParams.WRAP_CONTENT));
-                tv.setText(friend.getString("name"));
-                row.addView(tv);
-                mTableLayout.addView(row);
+                JSONObject jsonUser = new JSONObject(friends.get(i).toString());
+                String email = jsonUser.getString("email");
+                String name = jsonUser.getString("name");
+                double rating = jsonUser.getDouble("rating");
+                int numSalesReported = jsonUser.getInt("numSalesReported");
+                User user = new User(email, name, rating, numSalesReported);
+                friendsArrayList.add(user);
             }
         } catch (JSONException e) {
             Log.d("info", e.getMessage());
         }
+        ArrayAdapter<User> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, friendsArrayList);
+        mListView.setAdapter(adapter);
     }
 
     public class GetFriendsTask extends AsyncTask<Void, Void, JSONObject> {

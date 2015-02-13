@@ -45,18 +45,6 @@
             android:label="HomeActivity" >
         </activity>
         <activity
-            android:name=".MainTabActivity"
-            android:label="@string/title_activity_main_tab" >
-        </activity>
-        <activity
-            android:name=".FriendListActivity"
-            android:label="@string/title_friend_list"
-            android:parentActivityName=".MainTabActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.peaceteam.jeremydorne.shoppingwithfriends.MainTabActivity" />
-        </activity>
-        <activity
             android:name=".FriendsActivity"
             android:label="@string/title_activity_friends" >
         </activity>

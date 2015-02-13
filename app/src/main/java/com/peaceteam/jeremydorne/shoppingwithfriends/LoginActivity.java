@@ -279,8 +279,9 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
      * Logs in the user and sends them to the home screen if the authentication
      * was successful
      */
-    private void loginUser() {
+    private void loginUser(String validatedEmail) {
         Intent intent = new Intent(this, FriendsActivity.class);
+        intent.putExtra("email", validatedEmail);
         startActivity(intent);
     }
 
@@ -342,7 +343,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
             if (success) {
                 // finish();
-                loginUser();
+                loginUser(mEmail);
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
