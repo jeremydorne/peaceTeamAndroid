@@ -26,7 +26,11 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-
+/**
+ * Activity class for the friends list screen
+ * @author Robert Guthrie
+ * @version 1.0
+ */
 public class FriendsActivity extends Activity {
 
     public ListView mListView;
@@ -35,7 +39,10 @@ public class FriendsActivity extends Activity {
     public EditText mAddFriendField;
 
 
-
+    /**
+     * Get data from web service upon opening the friends screen
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +78,10 @@ public class FriendsActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * After getting data asynchronously, populates the list view with the data received
+     * @param data from HTTP request
+     */
     public void populateTable(JSONObject data) {
         try {
             JSONArray friends = data.getJSONArray("friends");
@@ -90,12 +101,21 @@ public class FriendsActivity extends Activity {
         mListView.setAdapter(adapter);
     }
 
+    /**
+     * Method that begins the process of adding a friend
+     * @param v
+     */
     public void addFriend(View v) {
         String friendEmail = mAddFriendField.getText().toString();
         AddFriendTask addFriendTask = new AddFriendTask(userEmail, friendEmail);
         addFriendTask.execute((Void) null);
     }
 
+    /**
+     * Used to add the friend to the friends list and display it in the list after
+     * completing the HTTP request
+     * @param data
+     */
     public void finishAddFriend(JSONObject data) {
         try {
             JSONObject friend = data.getJSONObject("friend");
@@ -112,15 +132,30 @@ public class FriendsActivity extends Activity {
         }
     }
 
+    /**
+     * Class that permits adding friends
+     * @author Robert Guthrie
+     * @version 1.0
+     */
     public class AddFriendTask extends AsyncTask<Void, Void, JSONObject> {
         private final String email;
         private final String friendEmail;
 
+        /**
+         * Constructs an AddFriendTask
+         * @param email to add the friend to
+         * @param friendEmail email of person being added
+         */
         public AddFriendTask(String email, String friendEmail) {
             this.email = email;
             this.friendEmail = friendEmail;
         }
 
+        /**
+         * Makes an HTTP request to add the friend to the user
+         * @param params
+         * @return The JSON whether or not it was successful
+         */
         @Override
         protected JSONObject doInBackground(Void... params) {
             try {
@@ -155,6 +190,10 @@ public class FriendsActivity extends Activity {
             return null;
         }
 
+        /**
+         * Populates the table with the new friend if it was successful
+         * @param result
+         */
         @Override
         protected void onPostExecute(final JSONObject result) {
             if (result != null) {
@@ -165,13 +204,27 @@ public class FriendsActivity extends Activity {
         }
     }
 
+    /**
+     * Class for getting all friends of a user from the web service
+     * @author Robert Guthrie
+     * @version 1.0
+     */
     public class GetFriendsTask extends AsyncTask<Void, Void, JSONObject> {
         private final String email;
 
+        /**
+         * Constructs a GetFriendsTask
+         * @param email of the user whose friends to get
+         */
         public GetFriendsTask(String email) {
             this.email = email;
         }
 
+        /**
+         * Sends an HTTP request to get a JSON array of all friends of a user
+         * @param params
+         * @return JSONObject containing the users friends and their info
+         */
         @Override
         protected JSONObject doInBackground(Void... params) {
             try {
@@ -198,6 +251,10 @@ public class FriendsActivity extends Activity {
             return null;
         }
 
+        /**
+         * If successful, populate the list view
+         * @param result
+         */
         @Override
         protected void onPostExecute(final JSONObject result) {
             if (result != null) {

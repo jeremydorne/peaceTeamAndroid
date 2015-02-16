@@ -14,9 +14,12 @@ import android.view.View;
  */
 public class HomeActivity extends Activity {
 
+    private String userEmail;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        userEmail = getIntent().getStringExtra("email");
         setContentView(R.layout.activity_home);
     }
 
@@ -50,6 +53,17 @@ public class HomeActivity extends Activity {
      */
     public void logoutUser(View v) {
         Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }
+
+
+    /**
+     * Sends the user to the friends screen after hitting the appropriate button
+     * @param v that sends the event
+     */
+    public void goToFriends(View v) {
+        Intent intent = new Intent(this, FriendsActivity.class);
+        intent.putExtra("email", userEmail);
         startActivity(intent);
     }
 }

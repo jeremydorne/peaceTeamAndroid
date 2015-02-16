@@ -280,7 +280,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
      * was successful
      */
     private void loginUser(String validatedEmail) {
-        Intent intent = new Intent(this, FriendsActivity.class);
+        Intent intent = new Intent(this, HomeActivity.class);
         intent.putExtra("email", validatedEmail);
         startActivity(intent);
     }
