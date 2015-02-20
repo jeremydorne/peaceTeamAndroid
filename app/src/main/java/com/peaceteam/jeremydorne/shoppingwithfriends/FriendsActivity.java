@@ -1,6 +1,7 @@
 package com.peaceteam.jeremydorne.shoppingwithfriends;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -99,6 +101,14 @@ public class FriendsActivity extends Activity {
         }
         ArrayAdapter<User> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, friendsArrayList);
         mListView.setAdapter(adapter);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                User user = (User) parent.getItemAtPosition(position);
+                Log.d("info", user.getEmail());
+                itemClick(user);
+            }
+        });
     }
 
     /**
@@ -130,6 +140,16 @@ public class FriendsActivity extends Activity {
         } catch (JSONException e) {
             Log.d("info", e.getMessage());
         }
+    }
+
+    public void itemClick(User user) {
+        Intent intent = new Intent(this, ProfileActivity.class);
+        intent.putExtra("currentUserEmail", userEmail);
+        intent.putExtra("email", user.getEmail());
+        intent.putExtra("name", user.getName());
+        intent.putExtra("rating", user.getRating());
+        intent.putExtra("numSalesReported", user.getNumSalesReported());
+        startActivity(intent);
     }
 
     /**

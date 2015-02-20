@@ -105,6 +105,7 @@ public class RegisterActivity extends Activity {
     public void finishRegistration() {
         Toast.makeText(getApplicationContext(), "Passwords Don't Match", Toast.LENGTH_LONG).show();
         Intent intent = new Intent(this, HomeActivity.class);
+        intent.putExtra("email", mEmail.getText().toString());
         startActivity(intent);
     }
 

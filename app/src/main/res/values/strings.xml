@@ -13,5 +13,6 @@
     <string name="title_friend_list">Friends</string>
     <string name="title_friend_detail">Friend Detail</string>
     <string name="title_activity_friends">FriendsActivity</string>
+    <string name="title_activity_profile">ProfileActivity</string>
 
 </resources>
