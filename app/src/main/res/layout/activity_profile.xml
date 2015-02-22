@@ -39,4 +39,14 @@
         android:layout_below="@+id/rating_text_field"
         android:layout_alignParentStart="true" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Remove Friend"
+        android:id="@+id/remove_friend_button"
+        android:onClick="removeFriend"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+
 </RelativeLayout>

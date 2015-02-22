@@ -1,11 +1,23 @@
 package com.peaceteam.jeremydorne.shoppingwithfriends;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
+
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 
 public class ProfileActivity extends Activity {
@@ -56,5 +68,69 @@ public class ProfileActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void removeFriend(View v) {
+        RemoveFriendTask task = new RemoveFriendTask(currentUserEmail, email);
+        task.execute((Void) null);
+    }
+
+    public void finishRemoveFriend() {
+        Intent intent = new Intent(this, FriendsActivity.class);
+        intent.putExtra("email", currentUserEmail);
+        startActivity(intent);
+    }
+
+    public class RemoveFriendTask extends AsyncTask<Void, Void, Boolean> {
+        private final String currentUserEmail;
+        private final String friendEmail;
+
+        RemoveFriendTask(String user, String friend) {
+            currentUserEmail = user;
+            friendEmail = friend;
+        }
+
+        @Override
+        public Boolean doInBackground(Void... params) {
+            String jsonReq = "{ \"email\": \"" + currentUserEmail + "\", \"friendEmail\": \""
+                    + friendEmail + "\"}";
+            try {
+                URL url = new URL("http://10.0.2.2:3000/removefriend");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setReadTimeout(10000);
+                conn.setConnectTimeout(15000);
+                conn.setRequestMethod("POST");
+                conn.setDoOutput(true);
+                conn.setChunkedStreamingMode(0);
+                conn.setRequestProperty("Content-Type", "application/json");
+                DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+                wr.writeBytes(jsonReq);
+                wr.flush();
+                wr.close();
+
+                //TODO Read a response and make sure it was written
+                BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                String inputLine;
+                StringBuffer response = new StringBuffer();
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+                JSONObject responseObject = new JSONObject(response.toString());
+                boolean didRemoveFriend = responseObject.getBoolean("didRemoveFriend");
+                return didRemoveFriend;
+
+            } catch (Exception e) {
+                Log.d("info", "Error occurred");
+            }
+            return false;
+        }
+
+        @Override
+        public void onPostExecute(final Boolean success) {
+            if (success) {
+                finishRemoveFriend();
+            }
+        }
     }
 }
