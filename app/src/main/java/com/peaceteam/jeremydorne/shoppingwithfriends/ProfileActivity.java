@@ -19,7 +19,11 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-
+/**
+ * Class for the Profile of a user
+ * @author Robert Guthrie
+ * @version 1.0
+ */
 public class ProfileActivity extends Activity {
 
     String currentUserEmail;
@@ -70,17 +74,29 @@ public class ProfileActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Removes a friend upon clicking the remove friend button
+     * @param v
+     */
     public void removeFriend(View v) {
         RemoveFriendTask task = new RemoveFriendTask(currentUserEmail, email);
         task.execute((Void) null);
     }
 
+    /**
+     * Called after removing a friend to return to the previous screen.
+     */
     public void finishRemoveFriend() {
         Intent intent = new Intent(this, FriendsActivity.class);
         intent.putExtra("email", currentUserEmail);
         startActivity(intent);
     }
 
+    /**
+     * Performs an HTTP Request to remove a friend
+     * @author Robert Guthrie
+     * @version 1.0
+     */
     public class RemoveFriendTask extends AsyncTask<Void, Void, Boolean> {
         private final String currentUserEmail;
         private final String friendEmail;
