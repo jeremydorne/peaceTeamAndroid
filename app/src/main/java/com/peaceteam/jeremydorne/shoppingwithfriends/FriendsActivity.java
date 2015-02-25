@@ -36,9 +36,11 @@ import java.util.ArrayList;
 public class FriendsActivity extends Activity {
 
     public ListView mListView;
+    public EditText mAddFriendField;
     private String userEmail;
     protected ArrayList<User> friendsArrayList;
-    public EditText mAddFriendField;
+    private String viewedUser = null;
+
 
 
     /**
@@ -53,10 +55,19 @@ public class FriendsActivity extends Activity {
         userEmail = getIntent().getStringExtra("email");
         mListView = (ListView) findViewById(R.id.list_view);
         mAddFriendField = (EditText) findViewById(R.id.add_friend_text_field);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ArrayAdapter<User> adapter = (ArrayAdapter<User>) mListView.getAdapter();
+        if (adapter != null) {
+            adapter.clear();
+            adapter.notifyDataSetChanged();
+        }
         GetFriendsTask getFriends = new GetFriendsTask(userEmail);
         getFriends.execute((Void) null);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

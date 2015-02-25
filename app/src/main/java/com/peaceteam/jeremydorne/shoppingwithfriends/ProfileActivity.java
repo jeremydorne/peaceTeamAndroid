@@ -87,9 +87,7 @@ public class ProfileActivity extends Activity {
      * Called after removing a friend to return to the previous screen.
      */
     public void finishRemoveFriend() {
-        Intent intent = new Intent(this, FriendsActivity.class);
-        intent.putExtra("email", currentUserEmail);
-        startActivity(intent);
+        finish();
     }
 
     /**
