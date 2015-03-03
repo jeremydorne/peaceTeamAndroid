@@ -3,7 +3,6 @@ package com.peaceteam.jeremydorne.shoppingwithfriends;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -13,9 +12,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
+
+import com.peaceteam.robertguthrie.model.User;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,9 +37,6 @@ public class FriendsActivity extends Activity {
     public EditText mAddFriendField;
     private String userEmail;
     protected ArrayList<User> friendsArrayList;
-    private String viewedUser = null;
-
-
 
     /**
      * Get data from web service upon opening the friends screen

@@ -66,4 +66,10 @@ public class HomeActivity extends Activity {
         intent.putExtra("email", userEmail);
         startActivity(intent);
     }
+
+    public void goToInterests(View v) {
+        Intent intent = new Intent(this, InterestsActivity.class);
+        intent.putExtra("email", userEmail);
+        startActivity(intent);
+    }
 }

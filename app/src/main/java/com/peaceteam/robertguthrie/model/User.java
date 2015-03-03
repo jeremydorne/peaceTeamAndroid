@@ -1,4 +1,4 @@
-package com.peaceteam.jeremydorne.shoppingwithfriends;
+package com.peaceteam.robertguthrie.model;
 
 /**
  * Created by robertguthrie on 2/12/15.

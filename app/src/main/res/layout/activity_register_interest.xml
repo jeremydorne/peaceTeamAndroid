@@ -1,0 +1,32 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    tools:context="com.peaceteam.jeremydorne.shoppingwithfriends.RegisterInterestActivity">
+
+    <EditText android:id="@+id/interest_text_box" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:hint="Item Name"
+        android:textColorHint="@color/abc_primary_text_material_dark"
+        android:textColor="#000000"
+        android:maxLines="1" android:singleLine="true" />
+
+    <EditText android:id="@+id/desired_price_text_box" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:hint="Maximum Price"
+        android:textColorHint="@color/abc_primary_text_material_dark"
+        android:textColor="#000000"
+        android:maxLines="1" android:singleLine="true" />
+
+    <Button android:id="@+id/register_interest_button" style="?android:textAppearanceSmall"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:text="Register Interest"
+        android:textStyle="bold"
+        android:background="#EFC94C"
+        android:textColor="#000000"
+        android:textSize="30sp"
+        android:onClick="registerInterest" />
+
+
+</LinearLayout>
