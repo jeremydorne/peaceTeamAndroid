@@ -18,7 +18,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-
+/**
+ * Activity class for registering interest for an item
+ */
 public class RegisterInterestActivity extends Activity {
 
     String currentUserEmail;
@@ -69,6 +71,12 @@ public class RegisterInterestActivity extends Activity {
         finish();
     }
 
+    /**
+     * Registers the user's interest and stores in the database
+     * with the web service
+     * @author Robert Guthrie
+     * @version 1.0
+     */
     public class RegisterInterestTask extends AsyncTask<Void, Void, Boolean> {
 
         private final String email;
@@ -81,6 +89,11 @@ public class RegisterInterestActivity extends Activity {
             this.price = price;
         }
 
+        /**
+         * Sends an HTTP POST request to store the desired interest in the database
+         * @param params
+         * @return whether it was successful
+         */
         @Override
         public Boolean doInBackground(Void... params) {
             try {
@@ -116,6 +129,10 @@ public class RegisterInterestActivity extends Activity {
             return false;
         }
 
+        /**
+         * If it was successful, then finish the process
+         * @param didRegisterInterest whether the process was successful
+         */
         @Override
         protected void onPostExecute(final Boolean didRegisterInterest) {
             if (didRegisterInterest) {

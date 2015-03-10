@@ -18,7 +18,11 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-
+/**
+ * Activity class for the user to report a new sale
+ * @author Robert Guthrie
+ * @version 1.0
+ */
 public class ReportSaleActivity extends Activity {
 
     EditText mItemName;
@@ -59,6 +63,10 @@ public class ReportSaleActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Called once a sale is submitted and sends it to be stored with the web service
+     * @param v the submit button
+     */
     public void reportSale(View v) {
         String itemName = mItemName.getText().toString();
         String location = mLocation.getText().toString();
@@ -67,10 +75,18 @@ public class ReportSaleActivity extends Activity {
         task.execute((Void) null);
     }
 
+    /**
+     * Unwinds to the previous screen after the sale is reported
+     */
     public void finishReportSale() {
         finish();
     }
 
+    /**
+     * Class to send HTTP request to submit a sale report
+     * @author Robert Guthrie
+     * @version 1.0
+     */
     public class ReportSaleTask extends AsyncTask<Void, Void, Boolean> {
         private String email;
         private String itemName;
@@ -84,6 +100,11 @@ public class ReportSaleActivity extends Activity {
             this.price = price;
         }
 
+        /**
+         * Sends an HTTP POST request to store the sale report in the database
+         * @param params
+         * @return whether it was successful or not
+         */
         @Override
         protected Boolean doInBackground(Void... params) {
             try {
@@ -120,6 +141,10 @@ public class ReportSaleActivity extends Activity {
             return false;
         }
 
+        /**
+         * If it was successful, then finish the process
+         * @param success
+         */
         @Override
         protected void onPostExecute(final Boolean success) {
             if (success) {

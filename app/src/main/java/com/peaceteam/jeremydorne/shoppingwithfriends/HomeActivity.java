@@ -129,18 +129,31 @@ public class HomeActivity extends Activity {
         startActivity(intent);
     }
 
+    /**
+     * Sends the user to the interests screen
+     * @param v that sends the event
+     */
     public void goToInterests(View v) {
         Intent intent = new Intent(this, InterestsActivity.class);
         intent.putExtra("email", userEmail);
         startActivity(intent);
     }
 
+    /**
+     * Sends the user to the screen to report a sale
+     * @param v that sends the event
+     */
     public void goToReportSale(View v) {
         Intent intent = new Intent(this, ReportSaleActivity.class);
         intent.putExtra("email", userEmail);
         startActivity(intent);
     }
 
+    /**
+     * Gets the sales that the user is interested in and below their threshold price
+     * @author Robert Guthrie
+     * @version 1.0
+     */
     public class GetSalesTask extends AsyncTask<Void, Void, JSONArray> {
         private String email;
 
@@ -148,6 +161,11 @@ public class HomeActivity extends Activity {
             this.email = email;
         }
 
+        /**
+         * Gets a JSON array of sales that the user is interested in that have been reported
+         * @param params
+         * @return the sales the user is interested in
+         */
         @Override
         protected JSONArray doInBackground(Void... params) {
             try {
@@ -174,6 +192,10 @@ public class HomeActivity extends Activity {
             return null;
         }
 
+        /**
+         * If it was successful, populate the table with the results
+         * @param result
+         */
         @Override
         protected void onPostExecute(final JSONArray result) {
             if (result != null) {
