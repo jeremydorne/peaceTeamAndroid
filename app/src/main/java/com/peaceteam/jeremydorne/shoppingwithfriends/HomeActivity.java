@@ -135,6 +135,12 @@ public class HomeActivity extends Activity {
         startActivity(intent);
     }
 
+    public void goToReportSale(View v) {
+        Intent intent = new Intent(this, ReportSaleActivity.class);
+        intent.putExtra("email", userEmail);
+        startActivity(intent);
+    }
+
     public class GetSalesTask extends AsyncTask<Void, Void, JSONArray> {
         private String email;
 
