@@ -105,7 +105,9 @@ public class HomeActivity extends Activity {
     }
 
     public void itemClick(Sale sale) {
-
+        Intent intent = new Intent(this, MapsActivity.class);
+        intent.putExtra("locationName", sale.getLocation());
+        startActivity(intent);
     }
 
     /**
