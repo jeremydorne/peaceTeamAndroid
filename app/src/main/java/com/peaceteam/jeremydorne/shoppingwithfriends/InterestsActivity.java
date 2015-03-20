@@ -27,6 +27,12 @@ import java.net.URL;
 import java.util.ArrayList;
 
 
+/**
+ * Activity class for viewing a person's registered
+ * interests
+ * @author Robert Guthrie
+ * @version 1.0
+ */
 public class InterestsActivity extends Activity {
 
     public ListView mListView;
@@ -44,6 +50,10 @@ public class InterestsActivity extends Activity {
         mListView = (ListView) findViewById(R.id.interests_list_view);
     }
 
+    /**
+     * Builds or updates the table of interests when data
+     * might have changed
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -78,6 +88,11 @@ public class InterestsActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Builds the table of interests from the
+     * data from HTTP requests
+     * @param interests received from HTTP request
+     */
     public void populateTable(JSONArray interests) {
         try {
             for (int i = 0; i < interests.length(); i++) {
@@ -94,20 +109,39 @@ public class InterestsActivity extends Activity {
         mListView.setAdapter(adapter);
     }
 
+    /**
+     * Moves the user to the register interest view
+     * @param v that fires the event
+     */
     public void goToRegisterInterest(View v) {
         Intent intent = new Intent(this, RegisterInterestActivity.class);
         intent.putExtra("email", userEmail);
         startActivity(intent);
     }
 
+    /**
+     * Class to make HTTP requests to get a user's interests
+     * @author Robert Guthrie
+     * @version 1.0
+     */
     public class GetInterestsTask extends AsyncTask<Void, Void, JSONArray> {
 
         private final String userEmail;
 
+        /**
+         * Creates a GetInterestsTask
+         * @param email of the user to get the interests of
+         */
         public GetInterestsTask(String email) {
             userEmail = email;
         }
 
+        /**
+         * Makes an HTTP request and returns a JSON array
+         * of the user's interests
+         * @param params
+         * @return a JSON array of the users interests
+         */
         protected JSONArray doInBackground(Void... params) {
             try {
                 URL url = new URL("http://10.0.2.2:3000/getinterests/" + userEmail);
@@ -133,6 +167,11 @@ public class InterestsActivity extends Activity {
             return null;
         }
 
+        /**
+         * Populates the list view with the retrieved data
+         * if the HTTP request was successful
+         * @param result of the HTTP request
+         */
         @Override
         protected void onPostExecute(final JSONArray result) {
             if (result != null) {

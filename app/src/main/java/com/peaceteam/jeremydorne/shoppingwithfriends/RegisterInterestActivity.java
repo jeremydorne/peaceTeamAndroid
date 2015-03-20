@@ -20,6 +20,8 @@ import java.net.URL;
 
 /**
  * Activity class for registering interest for an item
+ * @author Robert Guthrie
+ * @version 1.0
  */
 public class RegisterInterestActivity extends Activity {
 
@@ -59,6 +61,11 @@ public class RegisterInterestActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Takes the values from the text field
+     * and registers an interest with the user's account
+     * @param v view that triggers the event (submit button)
+     */
     public void registerInterest(View v) {
         String itemName = interestTextField.getText().toString();
         Double price = Double.parseDouble(priceTextField.getText().toString());
@@ -67,6 +74,10 @@ public class RegisterInterestActivity extends Activity {
         registerInterestTask.execute((Void) null);
     }
 
+    /**
+     * Once the interest is registered, return to
+     * the list of interests
+     */
     public void finishRegisterInterest() {
         finish();
     }
@@ -83,6 +94,11 @@ public class RegisterInterestActivity extends Activity {
         private final String itemName;
         private final Double price;
 
+        /**
+         * @param email of the user to add the interest to
+         * @param itemName of the interest
+         * @param price max price desired
+         */
         public RegisterInterestTask(String email, String itemName, Double price) {
             this.email = email;
             this.itemName = itemName;

@@ -45,6 +45,10 @@ public class HomeActivity extends Activity {
         mListView = (ListView) findViewById(R.id.sales_list_view);
     }
 
+    /**
+     * Builds the sales list or updates it if the data source 
+     * has changed.
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -79,6 +83,11 @@ public class HomeActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Populates the list of sales
+     * after getting the data via HTTP requests
+     * @param data from the HTTP request
+     */
     public void populateTable(JSONArray data) {
         try {
             for (int i = 0; i < data.length(); i++) {
@@ -104,6 +113,10 @@ public class HomeActivity extends Activity {
         });
     }
 
+    /**
+     * Opens a map view of a sale that is clicked
+     * @param sale to open a map view for
+     */
     public void itemClick(Sale sale) {
         Intent intent = new Intent(this, MapsActivity.class);
         intent.putExtra("locationName", sale.getLocation());
@@ -196,7 +209,7 @@ public class HomeActivity extends Activity {
 
         /**
          * If it was successful, populate the table with the results
-         * @param result
+         * @param result of the HTTP request
          */
         @Override
         protected void onPostExecute(final JSONArray result) {

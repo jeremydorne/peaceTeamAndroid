@@ -148,6 +148,10 @@ public class FriendsActivity extends Activity {
         }
     }
 
+    /**
+     * Opens the profile of a clicked friend
+     * @param user whose profile should be opened
+     */
     public void itemClick(User user) {
         Intent intent = new Intent(this, ProfileActivity.class);
         intent.putExtra("currentUserEmail", userEmail);

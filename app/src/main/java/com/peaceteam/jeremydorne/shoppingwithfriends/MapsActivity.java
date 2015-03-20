@@ -19,6 +19,11 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+/**
+ * Activity that displays a map of a given sale location
+ * @author Robert Guthrie
+ * @version 1.0
+ */
 public class MapsActivity extends FragmentActivity {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
@@ -68,6 +73,10 @@ public class MapsActivity extends FragmentActivity {
         }
     }
 
+    /**
+     * Adds a map marker based on the result of the HTTP request
+     * @param result of the HTTP request
+     */
     public void finish(JSONObject result) {
         try {
             mMap.addMarker(new MarkerOptions()
@@ -88,14 +97,31 @@ public class MapsActivity extends FragmentActivity {
         mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
     }
 
+    /**
+     * Class to make HTTP requests to get the 
+     * latitude and longitude of a given sale location
+     * @author Robert Guthrie
+     * @version 1.0
+     */
     public class GetLocationDataTask extends AsyncTask<Void, Void, JSONObject> {
 
         private String locationName;
 
+        /**
+         * Creates a GetLocationDataTask
+         * @param name of the location to get the data of
+         */
         public GetLocationDataTask(String name) {
             locationName = name;
         }
 
+        /**
+         * Performs an HTTP request and gets the 
+         * latitude and longitude of the name of a location
+         * passed into the intent that created the activity
+         * @param params
+         * @return the latitude and longitude of a given place
+         */
         @Override
         protected JSONObject doInBackground(Void... params) {
             try {
@@ -122,6 +148,11 @@ public class MapsActivity extends FragmentActivity {
             return null;
         }
 
+        /**
+         * If the HTTP request was successful,
+         * put a marker on the map view.
+         * @param result of the HTTP request
+         */
         @Override
         protected void onPostExecute(final JSONObject result) {
             if (result != null) {

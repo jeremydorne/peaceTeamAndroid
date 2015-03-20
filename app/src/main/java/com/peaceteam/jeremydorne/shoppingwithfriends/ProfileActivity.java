@@ -99,11 +99,21 @@ public class ProfileActivity extends Activity {
         private final String currentUserEmail;
         private final String friendEmail;
 
+        /**
+         * Creates a RemoveFriendTask
+         * @param user email of the user who is removing a friend
+         * @param friend email of the friend who is being removed
+         */
         RemoveFriendTask(String user, String friend) {
             currentUserEmail = user;
             friendEmail = friend;
         }
 
+        /**
+         * Performs an HTTP request to remove a friend
+         * @param params
+         * @return whether the removal was successful
+         */
         @Override
         public Boolean doInBackground(Void... params) {
             String jsonReq = "{ \"email\": \"" + currentUserEmail + "\", \"friendEmail\": \""
@@ -140,6 +150,10 @@ public class ProfileActivity extends Activity {
             return false;
         }
 
+        /**
+         * If the HTTP request was succcessful, remove the friend
+         * @success if the request was successful
+         */
         @Override
         public void onPostExecute(final Boolean success) {
             if (success) {
