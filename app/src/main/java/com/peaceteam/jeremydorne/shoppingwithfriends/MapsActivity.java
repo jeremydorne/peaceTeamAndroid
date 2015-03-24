@@ -5,6 +5,8 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -34,9 +36,6 @@ public class MapsActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         setUpMapIfNeeded();
-        locationName = getIntent().getStringExtra("locationName");
-        GetLocationDataTask task = new GetLocationDataTask(locationName);
-        task.execute((Void) null);
     }
 
     @Override
@@ -79,9 +78,11 @@ public class MapsActivity extends FragmentActivity {
      */
     public void finish(JSONObject result) {
         try {
+            LatLng res = new LatLng(result.getDouble("latitude"), result.getDouble("longitude"));
             mMap.addMarker(new MarkerOptions()
-                    .position(new LatLng(result.getDouble("latitude"), result.getDouble("longitude")))
+                    .position(res)
                     .title(result.getString("locationName")));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(res));
         } catch (JSONException e) {
             Log.d("info", e.getMessage());
         }
@@ -94,7 +95,9 @@ public class MapsActivity extends FragmentActivity {
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
     private void setUpMap() {
-        mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+        locationName = getIntent().getStringExtra("locationName");
+        GetLocationDataTask task = new GetLocationDataTask(locationName);
+        task.execute((Void) null);
     }
 
     /**
