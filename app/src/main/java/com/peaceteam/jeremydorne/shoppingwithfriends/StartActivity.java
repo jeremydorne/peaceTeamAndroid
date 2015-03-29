@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 
 /**
  * Class for the first activity the user sees
@@ -19,8 +18,6 @@ public class StartActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
-        final Button login = (Button) findViewById(R.id.login_id);
-        final Button register = (Button) findViewById(R.id.register_id);
     }
 
     /**

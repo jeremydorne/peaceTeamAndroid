@@ -5,14 +5,12 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,7 +27,6 @@ import java.net.URL;
 public class MapsActivity extends FragmentActivity {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
-    String locationName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +73,7 @@ public class MapsActivity extends FragmentActivity {
      * Adds a map marker based on the result of the HTTP request
      * @param result of the HTTP request
      */
-    public void finish(JSONObject result) {
+    void finish(JSONObject result) {
         try {
             LatLng res = new LatLng(result.getDouble("latitude"), result.getDouble("longitude"));
             mMap.addMarker(new MarkerOptions()
@@ -95,7 +92,7 @@ public class MapsActivity extends FragmentActivity {
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
     private void setUpMap() {
-        locationName = getIntent().getStringExtra("locationName");
+        String locationName = getIntent().getStringExtra("locationName");
         GetLocationDataTask task = new GetLocationDataTask(locationName);
         task.execute((Void) null);
     }
@@ -108,7 +105,7 @@ public class MapsActivity extends FragmentActivity {
      */
     public class GetLocationDataTask extends AsyncTask<Void, Void, JSONObject> {
 
-        private String locationName;
+        private final String locationName;
 
         /**
          * Creates a GetLocationDataTask
@@ -122,7 +119,7 @@ public class MapsActivity extends FragmentActivity {
          * Performs an HTTP request and gets the 
          * latitude and longitude of the name of a location
          * passed into the intent that created the activity
-         * @param params
+         * @param params void
          * @return the latitude and longitude of a given place
          */
         @Override
@@ -137,14 +134,13 @@ public class MapsActivity extends FragmentActivity {
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 String inputLine;
-                StringBuffer response = new StringBuffer();
+                StringBuilder response = new StringBuilder();
                 while ((inputLine = in.readLine()) != null) {
                     response.append(inputLine);
                 }
                 in.close();
                 Log.d("Info:", response.toString());
-                JSONObject responseObject = new JSONObject(response.toString());
-                return responseObject;
+                return new JSONObject(response.toString());
             } catch (Exception e) {
                 Log.d("info", e.getMessage());
             }

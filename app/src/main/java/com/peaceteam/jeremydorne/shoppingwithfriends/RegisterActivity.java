@@ -1,17 +1,13 @@
 package com.peaceteam.jeremydorne.shoppingwithfriends;
 
 import android.app.Activity;
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -31,15 +27,14 @@ import java.net.URL;
 public class RegisterActivity extends Activity {
 
     /* Variables to store references to UI controls */
-    EditText mEmail;
-    EditText mPassword;
-    EditText mConfirmPassword;
-    EditText mName;
-    Button mCreateAccount;
+    private EditText mEmail;
+    private EditText mPassword;
+    private EditText mConfirmPassword;
+    private EditText mName;
 
     /**
      * Initialize references to views and the database
-     * @param savedInstanceState
+     * @param savedInstanceState saved instance state
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +46,6 @@ public class RegisterActivity extends Activity {
         mPassword = (EditText) findViewById(R.id.password);
         mConfirmPassword = (EditText) findViewById(R.id.confirmPassword);
         mName = (EditText) findViewById(R.id.name);
-        mCreateAccount = (Button) findViewById(R.id.createAccount);
     }
 
 
@@ -77,16 +71,11 @@ public class RegisterActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
     /**
      * Upon submitting, adds the entered
      * email and password to the database to later
      * be authenticated against
-     * @param v
+     * @param v view
      */
     public void registerUser(View v) {
         String email = mEmail.getText().toString();
@@ -102,7 +91,7 @@ public class RegisterActivity extends Activity {
         }
     }
 
-    public void finishRegistration() {
+    void finishRegistration() {
         Toast.makeText(getApplicationContext(), "Passwords Don't Match", Toast.LENGTH_LONG).show();
         Intent intent = new Intent(this, HomeActivity.class);
         intent.putExtra("email", mEmail.getText().toString());
@@ -150,14 +139,13 @@ public class RegisterActivity extends Activity {
                 //TODO Read a response and make sure it was written
                 BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 String inputLine;
-                StringBuffer response = new StringBuffer();
+                StringBuilder response = new StringBuilder();
                 while ((inputLine = in.readLine()) != null) {
                     response.append(inputLine);
                 }
                 in.close();
                 JSONObject responseObject = new JSONObject(response.toString());
-                boolean isRegistered = responseObject.getBoolean("isRegistered");
-                return isRegistered;
+                return responseObject.getBoolean("isRegistered");
 
             } catch (Exception e) {
                 Log.d("info", "Error occurred");

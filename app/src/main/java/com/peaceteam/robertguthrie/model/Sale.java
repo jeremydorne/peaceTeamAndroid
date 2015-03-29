@@ -5,9 +5,9 @@ package com.peaceteam.robertguthrie.model;
  */
 public class Sale {
 
-    private String itemName;
-    private Double price;
-    private String location;
+    private final String itemName;
+    private final Double price;
+    private final String location;
 
     public Sale(String name, Double price, String location) {
         this.itemName = name;

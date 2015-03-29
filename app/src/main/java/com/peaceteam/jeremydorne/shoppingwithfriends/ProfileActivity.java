@@ -1,9 +1,7 @@
 package com.peaceteam.jeremydorne.shoppingwithfriends;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -26,11 +24,8 @@ import java.net.URL;
  */
 public class ProfileActivity extends Activity {
 
-    String currentUserEmail;
-    String email;
-    String name;
-    Double rating;
-    Integer numSalesReported;
+    private String currentUserEmail;
+    private String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +33,9 @@ public class ProfileActivity extends Activity {
         setContentView(R.layout.activity_profile);
         currentUserEmail = getIntent().getStringExtra("currentUserEmail");
         email = getIntent().getStringExtra("email");
-        name = getIntent().getStringExtra("name");
-        rating = getIntent().getDoubleExtra("rating", 0.0);
-        numSalesReported = getIntent().getIntExtra("numSalesReported", 0);
+        String name = getIntent().getStringExtra("name");
+        Double rating = getIntent().getDoubleExtra("rating", 0.0);
+        Integer numSalesReported = getIntent().getIntExtra("numSalesReported", 0);
         TextView emailTextField = (TextView) findViewById(R.id.email_text_field);
         emailTextField.setText(email);
         TextView nameTextField = (TextView) findViewById(R.id.name_text_field);
@@ -76,7 +71,7 @@ public class ProfileActivity extends Activity {
 
     /**
      * Removes a friend upon clicking the remove friend button
-     * @param v
+     * @param v view
      */
     public void removeFriend(View v) {
         RemoveFriendTask task = new RemoveFriendTask(currentUserEmail, email);
@@ -86,7 +81,7 @@ public class ProfileActivity extends Activity {
     /**
      * Called after removing a friend to return to the previous screen.
      */
-    public void finishRemoveFriend() {
+    void finishRemoveFriend() {
         finish();
     }
 
@@ -111,7 +106,7 @@ public class ProfileActivity extends Activity {
 
         /**
          * Performs an HTTP request to remove a friend
-         * @param params
+         * @param params void
          * @return whether the removal was successful
          */
         @Override
@@ -135,14 +130,13 @@ public class ProfileActivity extends Activity {
                 //TODO Read a response and make sure it was written
                 BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 String inputLine;
-                StringBuffer response = new StringBuffer();
+                StringBuilder response = new StringBuilder();
                 while ((inputLine = in.readLine()) != null) {
                     response.append(inputLine);
                 }
                 in.close();
                 JSONObject responseObject = new JSONObject(response.toString());
-                boolean didRemoveFriend = responseObject.getBoolean("didRemoveFriend");
-                return didRemoveFriend;
+                return responseObject.getBoolean("didRemoveFriend");
 
             } catch (Exception e) {
                 Log.d("info", "Error occurred");
@@ -152,7 +146,7 @@ public class ProfileActivity extends Activity {
 
         /**
          * If the HTTP request was succcessful, remove the friend
-         * @success if the request was successful
+         * @param success if the request was successful
          */
         @Override
         public void onPostExecute(final Boolean success) {

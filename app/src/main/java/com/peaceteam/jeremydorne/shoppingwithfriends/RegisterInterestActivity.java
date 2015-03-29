@@ -2,7 +2,6 @@ package com.peaceteam.jeremydorne.shoppingwithfriends;
 
 import android.app.Activity;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -25,9 +24,9 @@ import java.net.URL;
  */
 public class RegisterInterestActivity extends Activity {
 
-    String currentUserEmail;
-    EditText interestTextField;
-    EditText priceTextField;
+    private String currentUserEmail;
+    private EditText interestTextField;
+    private EditText priceTextField;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +77,7 @@ public class RegisterInterestActivity extends Activity {
      * Once the interest is registered, return to
      * the list of interests
      */
-    public void finishRegisterInterest() {
+    void finishRegisterInterest() {
         finish();
     }
 
@@ -107,7 +106,7 @@ public class RegisterInterestActivity extends Activity {
 
         /**
          * Sends an HTTP POST request to store the desired interest in the database
-         * @param params
+         * @param params void
          * @return whether it was successful
          */
         @Override
@@ -130,15 +129,14 @@ public class RegisterInterestActivity extends Activity {
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 String inputLine;
-                StringBuffer response = new StringBuffer();
+                StringBuilder response = new StringBuilder();
                 while ((inputLine = in.readLine()) != null) {
                     response.append(inputLine);
                 }
                 in.close();
                 Log.d("Info:", response.toString());
                 JSONObject responseObject = new JSONObject(response.toString());
-                Boolean didRegisterInterest = responseObject.getBoolean("didAddInterest");
-                return didRegisterInterest;
+                return responseObject.getBoolean("didRegisterInterest");
             } catch (Exception e) {
                 Log.d("info", "Problem adding interest");
             }

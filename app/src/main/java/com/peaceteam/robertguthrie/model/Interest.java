@@ -5,8 +5,8 @@ package com.peaceteam.robertguthrie.model;
  */
 public class Interest {
 
-    private String itemName;
-    private Double desiredPrice;
+    private final String itemName;
+    private final Double desiredPrice;
 
     public Interest(String name, Double price) {
         itemName = name;

@@ -4,12 +4,13 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
+    android:title="@string/title_activity_home"
     tools:context="com.peaceteam.jeremydorne.shoppingwithfriends.HomeActivity">
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="View Friends"
+        android:text="@string/view_friends"
         android:id="@+id/go_to_friends"
         android:onClick="goToFriends"
         android:layout_alignParentBottom="true"
@@ -18,11 +19,12 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="View Interests"
-        android:id="@+id/button"
+        android:text="@string/interests"
+        android:id="@+id/view_interests_button"
         android:layout_alignParentBottom="true"
         android:layout_toEndOf="@+id/go_to_friends"
-        android:onClick="goToInterests"/>
+        android:onClick="goToInterests"
+        tools:ignore="RelativeOverlap" />
 
     <ListView
         android:layout_width="wrap_content"
@@ -34,10 +36,10 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Report Sale"
-        android:id="@+id/button3"
+        android:text="@string/title_activity_report_sale"
+        android:id="@+id/report_sale_button"
         android:onClick="goToReportSale"
-        android:layout_alignTop="@+id/button"
+        android:layout_alignTop="@+id/view_interests_button"
         android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

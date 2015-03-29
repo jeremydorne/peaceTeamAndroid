@@ -3,18 +3,15 @@ package com.peaceteam.jeremydorne.shoppingwithfriends;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.peaceteam.robertguthrie.model.Interest;
-import com.peaceteam.robertguthrie.model.User;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,9 +32,9 @@ import java.util.ArrayList;
  */
 public class InterestsActivity extends Activity {
 
-    public ListView mListView;
+    private ListView mListView;
     private String userEmail;
-    protected ArrayList<Interest> interestsArrayList;
+    private ArrayList<Interest> interestsArrayList;
 
 
     @Override
@@ -57,7 +54,7 @@ public class InterestsActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        ArrayAdapter<Interest> adapter = (ArrayAdapter<Interest>) mListView.getAdapter();
+        @SuppressWarnings("unchecked") ArrayAdapter<Interest> adapter = (ArrayAdapter<Interest>) mListView.getAdapter();
         if (adapter != null) {
             adapter.clear();
             adapter.notifyDataSetChanged();
@@ -93,7 +90,7 @@ public class InterestsActivity extends Activity {
      * data from HTTP requests
      * @param interests received from HTTP request
      */
-    public void populateTable(JSONArray interests) {
+    void populateTable(JSONArray interests) {
         try {
             for (int i = 0; i < interests.length(); i++) {
                 JSONObject jsonUser = new JSONObject(interests.get(i).toString());
@@ -139,7 +136,7 @@ public class InterestsActivity extends Activity {
         /**
          * Makes an HTTP request and returns a JSON array
          * of the user's interests
-         * @param params
+         * @param params void
          * @return a JSON array of the users interests
          */
         protected JSONArray doInBackground(Void... params) {
@@ -153,14 +150,13 @@ public class InterestsActivity extends Activity {
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 String inputLine;
-                StringBuffer response = new StringBuffer();
+                StringBuilder response = new StringBuilder();
                 while ((inputLine = in.readLine()) != null) {
                     response.append(inputLine);
                 }
                 in.close();
                 Log.d("Info:", response.toString());
-                JSONArray responseObject = new JSONArray(response.toString());
-                return responseObject;
+                return new JSONArray(response.toString());
             } catch (Exception e) {
                 Log.d("info", e.getMessage());
             }

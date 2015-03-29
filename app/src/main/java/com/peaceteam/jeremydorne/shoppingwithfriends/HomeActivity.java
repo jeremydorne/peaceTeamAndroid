@@ -13,7 +13,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.peaceteam.robertguthrie.model.Sale;
-import com.peaceteam.robertguthrie.model.User;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -52,7 +51,7 @@ public class HomeActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        ArrayAdapter<Sale> adapter = (ArrayAdapter<Sale>) mListView.getAdapter();
+        @SuppressWarnings("unchecked") ArrayAdapter<Sale> adapter = (ArrayAdapter<Sale>) mListView.getAdapter();
         if (adapter != null) {
             adapter.clear();
             adapter.notifyDataSetChanged();
@@ -88,7 +87,7 @@ public class HomeActivity extends Activity {
      * after getting the data via HTTP requests
      * @param data from the HTTP request
      */
-    public void populateTable(JSONArray data) {
+    void populateTable(JSONArray data) {
         try {
             for (int i = 0; i < data.length(); i++) {
                 JSONObject jsonSale = new JSONObject(data.get(i).toString());
@@ -117,22 +116,11 @@ public class HomeActivity extends Activity {
      * Opens a map view of a sale that is clicked
      * @param sale to open a map view for
      */
-    public void itemClick(Sale sale) {
+    void itemClick(Sale sale) {
         Intent intent = new Intent(this, MapsActivity.class);
         intent.putExtra("locationName", sale.getLocation());
         startActivity(intent);
     }
-
-    /**
-     * Logs the user out upon hitting the logout button
-     * and returns them to the login screen
-     * @param v
-     */
-    public void logoutUser(View v) {
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
-    }
-
 
     /**
      * Sends the user to the friends screen after hitting the appropriate button
@@ -170,7 +158,7 @@ public class HomeActivity extends Activity {
      * @version 1.0
      */
     public class GetSalesTask extends AsyncTask<Void, Void, JSONArray> {
-        private String email;
+        private final String email;
 
         public GetSalesTask(String email) {
             this.email = email;
@@ -178,7 +166,7 @@ public class HomeActivity extends Activity {
 
         /**
          * Gets a JSON array of sales that the user is interested in that have been reported
-         * @param params
+         * @param params void
          * @return the sales the user is interested in
          */
         @Override
@@ -193,14 +181,13 @@ public class HomeActivity extends Activity {
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 String inputLine;
-                StringBuffer response = new StringBuffer();
+                StringBuilder response = new StringBuilder();
                 while ((inputLine = in.readLine()) != null) {
                     response.append(inputLine);
                 }
                 in.close();
                 Log.d("Info:", response.toString());
-                JSONArray responseObject = new JSONArray(response.toString());
-                return responseObject;
+                return new JSONArray(response.toString());
             } catch (Exception e) {
                 Log.d("info", e.getMessage());
             }

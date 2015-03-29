@@ -5,18 +5,26 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_home">Home</string>
     <string name="title_activity_register">Register</string>
-    <string name="title_activity_main_tab">Home</string>
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
     <string name="title_friend_list">Friends</string>
-    <string name="title_friend_detail">Friend Detail</string>
     <string name="title_activity_friends">Friends</string>
     <string name="title_activity_profile">Profile</string>
     <string name="title_activity_interests">Interests</string>
     <string name="title_activity_register_interest">Register Interest</string>
     <string name="title_activity_report_sale">Report Sale</string>
     <string name="title_activity_maps">Map</string>
-    <string name="google_maps_key">AIzaSyCtYpLS8U7LUnmFGxpQbb-FbG4e2bnw2Ww</string>
+    <string name="item_name">Item Name</string>
+    <string name="view_friends">View Friends</string>
+    <string name="maximum_price">Maximum Price</string>
+    <string name="name">Name</string>
+    <string name="interests">Interests</string>
+    <string name="location">Location</string>
+    <string name="add_friend">Add Friend</string>
+    <string name="price">Price</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="submit">Submit</string>
+    <string name="remove_friend">Remove Friend</string>
+    <string name="create_account">Create Account</string>
+    <string name="cancel">Cancel</string>
+    <!-- <string name="google_maps_key">AIzaSyCtYpLS8U7LUnmFGxpQbb-FbG4e2bnw2Ww</string> -->
 
 </resources>

@@ -2,13 +2,12 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".StartActivity"
-    android:id="@+id/peaceteam"
-    android:background="@drawable/street">
+    android:id="@+id/peaceteam">
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Login"
+        android:text="@string/title_activity_login"
         android:id="@+id/login_id"
         android:background="#45B29D"
         android:textColor="#000000"
@@ -20,7 +19,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Register"
+        android:text="@string/title_activity_register"
         android:id="@+id/register_id"
         android:background="#E27A3F"
         android:textColor="#000000"

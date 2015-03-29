@@ -8,20 +8,20 @@
     tools:context="com.peaceteam.jeremydorne.shoppingwithfriends.RegisterInterestActivity">
 
     <EditText android:id="@+id/interest_text_box" android:layout_width="match_parent"
-        android:layout_height="wrap_content" android:hint="Item Name"
+        android:layout_height="wrap_content" android:hint="@string/item_name"
         android:textColorHint="@color/abc_primary_text_material_dark"
         android:textColor="#000000"
         android:maxLines="1" android:singleLine="true" />
 
     <EditText android:id="@+id/desired_price_text_box" android:layout_width="match_parent"
-        android:layout_height="wrap_content" android:hint="Maximum Price"
+        android:layout_height="wrap_content" android:hint="@string/maximum_price"
         android:textColorHint="@color/abc_primary_text_material_dark"
         android:textColor="#000000"
         android:maxLines="1" android:singleLine="true" />
 
     <Button android:id="@+id/register_interest_button" style="?android:textAppearanceSmall"
         android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:text="Register Interest"
+        android:text="@string/title_activity_register_interest"
         android:textStyle="bold"
         android:background="#EFC94C"
         android:textColor="#000000"

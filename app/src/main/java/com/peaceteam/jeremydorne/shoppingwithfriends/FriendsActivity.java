@@ -33,14 +33,14 @@ import java.util.ArrayList;
  */
 public class FriendsActivity extends Activity {
 
-    public ListView mListView;
-    public EditText mAddFriendField;
+    private ListView mListView;
+    private EditText mAddFriendField;
     private String userEmail;
-    protected ArrayList<User> friendsArrayList;
+    private ArrayList<User> friendsArrayList;
 
     /**
      * Get data from web service upon opening the friends screen
-     * @param savedInstanceState
+     * @param savedInstanceState saved instance state
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +55,7 @@ public class FriendsActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        ArrayAdapter<User> adapter = (ArrayAdapter<User>) mListView.getAdapter();
+        @SuppressWarnings("unchecked") ArrayAdapter<User> adapter = (ArrayAdapter<User>) mListView.getAdapter();
         if (adapter != null) {
             adapter.clear();
             adapter.notifyDataSetChanged();
@@ -90,7 +90,7 @@ public class FriendsActivity extends Activity {
      * After getting data asynchronously, populates the list view with the data received
      * @param data from HTTP request
      */
-    public void populateTable(JSONObject data) {
+    void populateTable(JSONObject data) {
         try {
             JSONArray friends = data.getJSONArray("friends");
             for (int i = 0; i < friends.length(); i++) {
@@ -119,7 +119,7 @@ public class FriendsActivity extends Activity {
 
     /**
      * Method that begins the process of adding a friend
-     * @param v
+     * @param v view
      */
     public void addFriend(View v) {
         String friendEmail = mAddFriendField.getText().toString();
@@ -130,9 +130,9 @@ public class FriendsActivity extends Activity {
     /**
      * Used to add the friend to the friends list and display it in the list after
      * completing the HTTP request
-     * @param data
+     * @param data from HTTP request
      */
-    public void finishAddFriend(JSONObject data) {
+    void finishAddFriend(JSONObject data) {
         try {
             JSONObject friend = data.getJSONObject("friend");
             String email = friend.getString("email");
@@ -152,7 +152,7 @@ public class FriendsActivity extends Activity {
      * Opens the profile of a clicked friend
      * @param user whose profile should be opened
      */
-    public void itemClick(User user) {
+    void itemClick(User user) {
         Intent intent = new Intent(this, ProfileActivity.class);
         intent.putExtra("currentUserEmail", userEmail);
         intent.putExtra("email", user.getEmail());
@@ -183,7 +183,7 @@ public class FriendsActivity extends Activity {
 
         /**
          * Makes an HTTP request to add the friend to the user
-         * @param params
+         * @param params void
          * @return The JSON whether or not it was successful
          */
         @Override
@@ -206,14 +206,13 @@ public class FriendsActivity extends Activity {
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 String inputLine;
-                StringBuffer response = new StringBuffer();
+                StringBuilder response = new StringBuilder();
                 while ((inputLine = in.readLine()) != null) {
                     response.append(inputLine);
                 }
                 in.close();
                 Log.d("Info:", response.toString());
-                JSONObject responseObject = new JSONObject(response.toString());
-                return responseObject;
+                return new JSONObject(response.toString());
             } catch (Exception e) {
                 Log.d("info", "Problem adding friend");
             }
@@ -222,7 +221,7 @@ public class FriendsActivity extends Activity {
 
         /**
          * Populates the table with the new friend if it was successful
-         * @param result
+         * @param result of the HTTP request
          */
         @Override
         protected void onPostExecute(final JSONObject result) {
@@ -252,7 +251,7 @@ public class FriendsActivity extends Activity {
 
         /**
          * Sends an HTTP request to get a JSON array of all friends of a user
-         * @param params
+         * @param params void
          * @return JSONObject containing the users friends and their info
          */
         @Override
@@ -267,14 +266,13 @@ public class FriendsActivity extends Activity {
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 String inputLine;
-                StringBuffer response = new StringBuffer();
+                StringBuilder response = new StringBuilder();
                 while ((inputLine = in.readLine()) != null) {
                     response.append(inputLine);
                 }
                 in.close();
                 Log.d("Info:", response.toString());
-                JSONObject responseObject = new JSONObject(response.toString());
-                return responseObject;
+                return new JSONObject(response.toString());
             } catch (Exception e) {
                 Log.d("info", e.getMessage());
             }
@@ -283,7 +281,7 @@ public class FriendsActivity extends Activity {
 
         /**
          * If successful, populate the list view
-         * @param result
+         * @param result of the HTTP request
          */
         @Override
         protected void onPostExecute(final JSONObject result) {

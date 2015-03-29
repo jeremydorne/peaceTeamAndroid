@@ -5,10 +5,10 @@ package com.peaceteam.robertguthrie.model;
  */
 public class User {
 
-    private String email;
-    private String name;
-    private double rating;
-    private int numSalesReported;
+    private final String email;
+    private final String name;
+    private final double rating;
+    private final int numSalesReported;
 
     public User(String email, String name, double rating, int numSalesReported) {
         this.email = email;

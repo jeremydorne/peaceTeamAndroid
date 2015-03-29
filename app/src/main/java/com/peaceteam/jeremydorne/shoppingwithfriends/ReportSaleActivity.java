@@ -2,7 +2,6 @@ package com.peaceteam.jeremydorne.shoppingwithfriends;
 
 import android.app.Activity;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -25,10 +24,10 @@ import java.net.URL;
  */
 public class ReportSaleActivity extends Activity {
 
-    EditText mItemName;
-    EditText mLocation;
-    EditText mPrice;
-    String userEmail;
+    private EditText mItemName;
+    private EditText mLocation;
+    private EditText mPrice;
+    private String userEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +36,6 @@ public class ReportSaleActivity extends Activity {
         mItemName = (EditText) findViewById(R.id.item_name_edit_text);
         mLocation = (EditText) findViewById(R.id.location_edit_text);
         mPrice = (EditText) findViewById(R.id.price_edit_text);
-        String userEmail = getIntent().getStringExtra("email");
     }
 
 
@@ -78,7 +76,7 @@ public class ReportSaleActivity extends Activity {
     /**
      * Unwinds to the previous screen after the sale is reported
      */
-    public void finishReportSale() {
+    void finishReportSale() {
         finish();
     }
 
@@ -88,10 +86,10 @@ public class ReportSaleActivity extends Activity {
      * @version 1.0
      */
     public class ReportSaleTask extends AsyncTask<Void, Void, Boolean> {
-        private String email;
-        private String itemName;
-        private String location;
-        private Double price;
+        private final String email;
+        private final String itemName;
+        private final String location;
+        private final Double price;
 
         public ReportSaleTask(String email, String itemName, String location, Double price) {
             this.email = email;
@@ -102,7 +100,7 @@ public class ReportSaleActivity extends Activity {
 
         /**
          * Sends an HTTP POST request to store the sale report in the database
-         * @param params
+         * @param params void
          * @return whether it was successful or not
          */
         @Override
@@ -126,15 +124,14 @@ public class ReportSaleActivity extends Activity {
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 String inputLine;
-                StringBuffer response = new StringBuffer();
+                StringBuilder response = new StringBuilder();
                 while ((inputLine = in.readLine()) != null) {
                     response.append(inputLine);
                 }
                 in.close();
                 Log.d("Info:", response.toString());
                 JSONObject responseObject = new JSONObject(response.toString());
-                Boolean didReportSale = responseObject.getBoolean("didReportSale");
-                return didReportSale;
+                return responseObject.getBoolean("didReportSale");
             } catch (Exception e) {
                 Log.d("info", "Problem reporting sale");
             }
@@ -143,7 +140,7 @@ public class ReportSaleActivity extends Activity {
 
         /**
          * If it was successful, then finish the process
-         * @param success
+         * @param success if the HTTP request was successful
          */
         @Override
         protected void onPostExecute(final Boolean success) {
